@@ -69,3 +69,4 @@ public:
 		mainAdmin.setPassword(password);
 	}
 };
+
