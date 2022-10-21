@@ -17,9 +17,7 @@ int main() {
 	Retrieve::fileToClient();
 	Retrieve::fileToEmp();
 	Retrieve::fileToAdmin();
-
-
 	
-	
+	return 0;
 }
 
