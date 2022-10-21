@@ -17,6 +17,10 @@ int main() {
 	Retrieve::fileToClient();
 	Retrieve::fileToEmp();
 	Retrieve::fileToAdmin();
+
+
+	
+	system("pause");
 	
 	return 0;
 }
