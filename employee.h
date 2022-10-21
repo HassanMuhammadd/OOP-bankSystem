@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
-#include<fstream>
-#include<vector>
+#include <fstream>
+#include <vector>
 #include "person.h"
 using namespace std;
 
@@ -50,21 +50,30 @@ public:
 		}
 	}
 	Client* searchclient(int id) {
-		bool found = false;
-		Client returned;
+		
 		for (clientIt = allClients.begin(); clientIt != allClients.end(); clientIt++) {
-
 			if (clientIt->getID() == id) {
 				return clientIt._Ptr;
 			}
 		}
+
 		return NULL;
 	
 	}
 	void editclient(string newname, string newpass, int id, double newbalance) {
+		if (searchclient(id)) {
+
 		searchclient(id)->setName(newname);
 		searchclient(id)->setPassword(newpass);
 		searchclient(id)->setBalance(newbalance);
+		}
+		else {
+			cout << "Client not found.\n";
+			cout << "Enter Client ID: \n";
+			int Newid;
+			cin >> Newid;
+			editclient(newname, newpass, Newid, newbalance);
+		}
 	
 		/*cout << "Enter The id Of The Client: ";
 		int oldid;
