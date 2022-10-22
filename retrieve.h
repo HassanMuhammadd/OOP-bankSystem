@@ -103,16 +103,16 @@ public:
 		cout << "Login as: \n\n";
 		cout << "1:Admin\n2:Employee\n3:Client\n\n";
 	}
-
 	static int loginAs() {
 		int choice;
 		cin >> choice;
 		return choice;
 	}
+
 	static void invalid(int c) {
 		if (c != 1 && c != 2 && c != 3) {
 			cout << "\nInvalid Option.\n\n";
-			runApp();
+			
 		}
 	}
 	static void loginScreen(int c) {
