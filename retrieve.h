@@ -50,7 +50,8 @@ public:
 		int id;
 		double salary;
 		while (empFile >> name >> id >> password >> salary) {
-			Employee e;
+			Employee 
+				e;
 			e.setName(name);
 			e.setID(id);
 			e.setPassword(password);
