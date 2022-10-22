@@ -3,6 +3,8 @@
 #include "client.h"
 #include "employee.h"
 #include "admin.h"
+#include "clientManager.h"
+#include "fileManager.h"
 using namespace std;
 
 class Retrieve {
@@ -70,4 +72,76 @@ public:
 		mainAdmin.setPassword(password);
 	}
 };
+
+
+int loginChoice;
+
+class screensClass {
+public:
+
+	static void runApp() {
+		//getting data from files to vectors
+		Retrieve::fileToClient();
+		Retrieve::fileToEmp();
+		Retrieve::fileToAdmin();
+
+		//start
+		welcome();
+		loginOptions();
+		//choosing to login as admin/client/emp
+		loginChoice = loginAs();
+		//checking if input is invalid
+		invalid(loginChoice);
+		//logging in as admin or emp or client
+		loginScreen(loginChoice);
+	}
+
+	static void welcome() {
+		cout << "Welcome to ALO bank\n===============================\n";
+	}
+	static void loginOptions() {
+		cout << "Login as: \n\n";
+		cout << "1:Admin\n2:Employee\n3:Client\n\n";
+	}
+
+	static int loginAs() {
+		int choice;
+		cin >> choice;
+		return choice;
+	}
+	static void invalid(int c) {
+		if (c != 1 && c != 2 && c != 3) {
+			cout << "\nInvalid Option.\n\n";
+			runApp();
+		}
+	}
+	static void loginScreen(int c) {
+		if (c == 1) {
+			//admin
+			cout << "Enter Admin ID and Password: \n";
+
+		}
+		if (c == 2) {
+			//emp
+			cout << "Enter Employee ID and Password: \n";
+		}
+		if (c == 3) {
+			//Client
+			cout << "Enter Client ID and Password: \n";
+			//client Login
+			
+		}
+	}
+
+	static int clientOptions() {
+		int clientChoice;
+		cin >> clientChoice;
+		return clientChoice;
+	}
+	static void logOut() {
+		screensClass::welcome();
+		screensClass::loginOptions();
+	}
+};
+
 

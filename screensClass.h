@@ -6,7 +6,7 @@
 #include "clientManager.h"
 
 using namespace std;
-
+/*
 int loginChoice;
 
 class screensClass {
@@ -71,5 +71,4 @@ public:
 		screensClass::loginOptions();
 	}
 };
-
-
+*/
