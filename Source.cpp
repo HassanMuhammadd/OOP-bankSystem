@@ -14,13 +14,7 @@ using namespace std;
 
 
 int main() {
-	Retrieve::fileToClient();
-	Retrieve::fileToEmp();
-	Retrieve::fileToAdmin();
-
-
-	
-	
+	screensClass::runApp();	
 	return 0;
 }
 

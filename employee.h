@@ -75,41 +75,7 @@ public:
 			cin >> Newid;
 			editclient(newname, newpass, Newid, newbalance);
 		}
-	
-		/*cout << "Enter The id Of The Client: ";
-		int oldid;
-		cin >> oldid;
-		Client edit = searchclient(oldid);
-
-		ifstream clientFile;
-		clientFile.open("clients.txt");
-
-		string oldName, oldPassword;
-		int idd;
-		double oldBalance;
-
-		//saving new data in temp file
-		ofstream tempFile("temp.txt");
-		while (clientFile >> oldName >> idd >> oldBalance >> oldPassword) {
-			if (idd == oldid) {
-				tempFile << newname << " " << newid << " " << newbalance << " " << newpass << endl;
-			}
-			else {
-				tempFile << oldName << " " << idd << " " << oldBalance << " " << oldPassword << endl;
-			}
-
 		}
-		//restoring data in clients.txt
-		ifstream tempOpen("temp.txt");
-		ofstream restore("clients.txt");
-		string tempName, tempPassword;
-		int tempID;
-		double tempBalance;
-		while (tempOpen >> tempName >> tempID >> tempBalance >> tempPassword) {
-			restore << tempName << " " << tempID << " " << tempBalance << " " << tempPassword << endl;
-		}
-		*/
-	}
 };
 
 static vector<Employee> allEmployees;
