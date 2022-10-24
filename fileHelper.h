@@ -7,14 +7,14 @@
 using namespace std;
 class Filehelper {
 
+
+public:
 	static void savelast(string fileName, int id) {
 		ofstream file;
 		file.open(fileName);
 		file << id;
 		file.close();
 	}
-
-public:
 	static int getlastClient() {
 		ifstream file;
 		file.open("lastclientid.txt");

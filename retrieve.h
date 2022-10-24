@@ -77,6 +77,7 @@ public:
 
 int loginChoice;
 Client* loggedInClient;
+Employee* loggedInEmployee;
 
 class screensClass {
 public:
@@ -123,26 +124,40 @@ public:
 	}
 	
 	static void loginScreen(int c) {
+			int id;
+			string password;
 		if (c == 1) {
 			//admin
 			cout << "Enter Admin ID and Password: \n";
-
+			//admin login
+			cin >> id >> password;
+			if (AdminManager::login(id, password)) {
+				AdminManager::PrintAdminMenu();
+				AdminOptions();
+			}
 		}
 		if (c == 2) {
 			//emp
 			cout << "Enter Employee ID and Password: \n";
+			cin >> id >> password;
+			//emp login
+			loggedInEmployee = EmployeeManager::login(id,password,allEmployees);
+			//emp menu
+			EmployeeManager::PrintMenu();
+			EmployeeOptions();
 		}
 		if (c == 3) {
 			//Client app
 			cout << "Enter Client ID and Password: \n";
 			//client Login
-			int id;
-			string password;
+			
 			cin >> id >> password;
 			loggedInClient = ClientManager::login(id, password, allClients);
 			//client menu
 			ClientManager::PrintClientMenu();
 			clientOptions(loggedInClient);
+
+
 		}
 	}
 	static void clientOptions(Client* loggedInClient) {
@@ -199,11 +214,259 @@ public:
 		}
 	}
 
-	static int clientOptions() {
-		int clientChoice;
-		cin >> clientChoice;
-		return clientChoice;
+	static void EmployeeOptions() {
+		int choice;
+		cin >> choice;
+		if (choice == 1) {
+			Client s;
+			string name, password;
+			double balance;
+			cout << "\nEnter valid Name,Password and balance\n";
+			cin >> name >> password >> balance;
+			s.setName(name);
+			s.setPassword(password);
+			s.setBalance(balance);
+			s.setID(Filehelper::getlastClient()+1);
+			Filehelper::savelast("lastclientid.txt",s.getID());
+			loggedInEmployee->Addclient(s);
+			
+			cout << "\n\nEnter Y to return to the client menu, N to Exit the program. \n";
+			char toReturn;
+			cin >> toReturn;
+			if (toReturn == 'Y' || toReturn == 'y') {
+				//back to main page
+				EmployeeManager::PrintMenu();
+				EmployeeOptions();
+			}
+			else {
+				return;
+			}
+		}
+		if (choice == 2) {
+
+			loggedInEmployee->listclient();
+			cout << "\n\nEnter Y to return to the client menu, N to Exit the program. \n";
+			char toReturn;
+			cin >> toReturn;
+			if (toReturn == 'Y' || toReturn == 'y') {
+				//back to main page
+				EmployeeManager::PrintMenu();
+				EmployeeOptions();
+			}
+			else {
+				return;
+			}
+		}
+		if (choice == 3) {
+
+			string name, password;
+			int id;
+			double balance;
+			cout << "Enter client ID: ";
+			cin >> id;
+			cout << "Enter Client new name,new password,and newbalance\n";
+			cin >> name >> password >> balance;
+			loggedInEmployee->editclient(name, password, id, balance);
+			cout << "\n\nEnter Y to return to the client menu, N to Exit the program. \n";
+			char toReturn;
+			cin >> toReturn;
+			if (toReturn == 'Y' || toReturn == 'y') {
+				//back to main page
+				EmployeeManager::PrintMenu();
+				EmployeeOptions();
+			}
+			else {
+				return;
+			}
+		}
+		if (choice == 4) {
+			int id;
+			cout << "Enter Client id\n";
+			cin >> id;
+			loggedInEmployee->searchclient(id)->display();
+			
+		}
+		if (choice == 5) {
+			loggedInEmployee->display();
+			cout << "\n\nEnter Y to return to the client menu, N to Exit the program. \n";
+			char toReturn;
+			cin >> toReturn;
+			if (toReturn == 'Y' || toReturn == 'y') {
+				//back to main page
+				EmployeeManager::PrintMenu();
+				EmployeeOptions();
+			}
+			else {
+				return;
+			}
+		}
+		if (choice == 6) {
+			return;
+		}
 	}
+
+	static void AdminOptions() {
+		int choice;
+		cin >> choice;
+		if (choice == 1) {//add client
+			Client s;
+			string name, password;
+			double balance;
+			cout << "\nEnter valid Name,Password and balance\n";
+			cin >> name >> password >> balance;
+			s.setName(name);
+			s.setPassword(password);
+			s.setBalance(balance);
+			s.setID(Filehelper::getlastClient() + 1);
+			Filehelper::savelast("lastclientid.txt", s.getID());
+			loggedInEmployee->Addclient(s);
+
+			cout << "\n\nEnter Y to return to the menu, N to Exit the program. \n";
+			char toReturn;
+			cin >> toReturn;
+			if (toReturn == 'Y' || toReturn == 'y') {
+				//back to main page
+				AdminManager::PrintAdminMenu();
+				AdminOptions();
+			}
+			else {
+				return;
+			}
+		}
+		if (choice == 2) {//remove client
+			int id;
+			string password;
+			cout << "Enter id and Password\n";
+			cin >> id >> password;
+			AdminManager::RemoveClient(id, password, allClients);
+
+			cout << "\n\nEnter Y to return to the menu, N to Exit the program. \n";
+			char toReturn;
+			cin >> toReturn;
+			if (toReturn == 'Y' || toReturn == 'y') {
+				//back to main page
+				AdminManager::PrintAdminMenu();
+				AdminOptions();
+			}
+			else {
+				return;
+			}
+		}
+		if (choice == 3) {
+			int id;
+			string password;
+			cout << "Enter Client id and Password: \n";
+			cin >> id >> password;
+			loggedInClient = ClientManager::login(id, password, allClients);
+			ClientManager::updatePassword(loggedInClient);
+
+			cout << "\n\nEnter Y to return to the menu, N to Exit the program. \n";
+			char toReturn;
+			cin >> toReturn;
+			if (toReturn == 'Y' || toReturn == 'y') {
+				//back to main page
+				AdminManager::PrintAdminMenu();
+				AdminOptions();
+			}
+			else {
+				return;
+			}
+		}
+		if (choice == 4) {
+			Employee s;
+			string name, password;
+			double salary;
+			cout << "Enter Employee Name, Password, and Salary:\n";
+			cin >> name >> password >> salary;
+			s.setName(name);
+			s.setPassword(password);
+			s.setSalary(salary);
+			s.setID(Filehelper::getLastEmp() + 1);
+			Filehelper::savelast("lastempid.txt", s.getID());
+			mainAdmin.addemployee(s);
+
+			cout << "\n\nEnter Y to return to the menu, N to Exit the program. \n";
+			char toReturn;
+			cin >> toReturn;
+			if (toReturn == 'Y' || toReturn == 'y') {
+				//back to main page
+				AdminManager::PrintAdminMenu();
+				AdminOptions();
+			}
+			else {
+				return;
+			}
+		}
+		if (choice == 5) {
+			int id;
+			string password;
+			cout << "Enter id and Password\n";
+			cin >> id >> password;
+			AdminManager::RemoveEmployee(id, password, allEmployees);
+
+			cout << "\n\nEnter Y to return to the menu, N to Exit the program. \n";
+			char toReturn;
+			cin >> toReturn;
+			if (toReturn == 'Y' || toReturn == 'y') {
+				//back to main page
+				AdminManager::PrintAdminMenu();
+				AdminOptions();
+			}
+			else {
+				return;
+			}
+		}
+		if (choice == 6) {
+				int id;
+				string password;
+				cout << "Enter CLient id and Password";
+				cin >> id >> password;
+				loggedInEmployee = EmployeeManager::login(id, password, allEmployees);
+				EmployeeManager::updatePassword(loggedInEmployee);
+
+				cout << "\n\nEnter Y to return to the menu, N to Exit the program. \n";
+				char toReturn;
+				cin >> toReturn;
+				if (toReturn == 'Y' || toReturn == 'y') {
+					//back to main page
+					AdminManager::PrintAdminMenu();
+					AdminOptions();
+				}
+				else {
+					return;
+				}
+
+		}
+		if (choice == 7) {
+			Employee::listclient();
+			cout << "\n\nEnter Y to return to the menu, N to Exit the program. \n";
+			char toReturn;
+			cin >> toReturn;
+			if (toReturn == 'Y' || toReturn == 'y') {
+				//back to main page
+				AdminManager::PrintAdminMenu();
+				AdminOptions();
+			}
+			else {
+				return;
+			}
+		}
+		if (choice == 8) {
+			EmployeeManager::listEmployee();
+			cout << "\n\nEnter Y to return to the menu, N to Exit the program. \n";
+			char toReturn;
+			cin >> toReturn;
+			if (toReturn == 'Y' || toReturn == 'y') {
+				//back to main page
+				AdminManager::PrintAdminMenu();
+				AdminOptions();
+			}
+			else {
+				return;
+			}
+		}
+	}
+
 	static void logOut() {
 		screensClass::welcome();
 		screensClass::loginOptions();
