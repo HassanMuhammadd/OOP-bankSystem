@@ -2,48 +2,40 @@
 
 #include<iostream>
 #include<fstream>
+#include<vector>
 #include "client.h"
 using namespace std;
 
 
 
 
-class ClientManager {
-public:
-	static void PrintClientMenu() {
-		cout << endl << "===============================\n\n";
-		cout << "1.deposit" << endl << "2.withdraw" << endl << "3.transfer to another client" << endl << "4.display info" << endl << "-1.Log out\n";
-	}	
-	
-	/*static Client clientLogin(int id, string password) {
-		bool found = false;
-		ifstream clientFile;
-		clientFile.open("clients.txt");
-		string name;
-		string pass;
-		int oldid;
-		double balance;
-		Client returns;
-		while (clientFile >> name >> oldid >> balance >> pass)
-		{
-			if (oldid == id && pass==password) {
-				found = true;
-				returns.setName(name);
-				returns.setPassword(pass);
-				returns.setBalance(balance);
-			}
-		}
-		if (found)
-			return returns;
-		else {
-			cout << "Client ID not found.\n";
-			cout << "Enter Client ID and password: \n";
-			cin >> id >> password;
-			clientLogin(id, password);
-		}
-	}
-	*/
-
-	
-	
-};
+//class ClientManager {
+//public:
+//	static void PrintClientMenu() {
+//		cout << endl << "===============================\n\n";
+//		cout << "1.deposit" << endl << "2.withdraw" << endl << "3.transfer to another client" << endl << "4.display info" << endl << "-1.Log out\n";
+//	}	
+//	
+//
+//	static Client* login(int id, string password,vector<Client>& allClients) {
+//		bool found = false;
+//		
+//		for (clientIt = allClients.begin(); clientIt != allClients.end(); clientIt++) {
+//			if (clientIt->getID() == id && clientIt->getPassword() == password) {
+//				found = true;
+//				return clientIt._Ptr;
+//			}
+//		}
+//		if (!found) {
+//			cout << "Invalid Client data\n";
+//			cout << "Enter Client ID and Password: \n";
+//			int id;
+//			string password;
+//			login(id, password, allClients);
+//		}
+//	}
+//	
+//
+//	
+//	
+//};

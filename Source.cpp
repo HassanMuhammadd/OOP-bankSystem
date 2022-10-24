@@ -7,14 +7,15 @@
 #include "admin.h"
 #include "employee.h"
 #include "fileManager.h"
-#include "screensClass.h"
 #include "retrieve.h"
 using namespace std;
 
 
 
 int main() {
-	screensClass::runApp();	
+	
+	screensClass::runApp();		
+	
 	return 0;
 }
 

@@ -74,7 +74,9 @@ public:
 };
 
 
+
 int loginChoice;
+Client* loggedInClient;
 
 class screensClass {
 public:
@@ -94,6 +96,11 @@ public:
 		invalid(loginChoice);
 		//logging in as admin or emp or client
 		loginScreen(loginChoice);
+		
+
+		//putting data back to files
+		Retrieve::clientToFile();
+		Retrieve::empToFile();
 	}
 
 	static void welcome() {
@@ -108,13 +115,13 @@ public:
 		cin >> choice;
 		return choice;
 	}
-
 	static void invalid(int c) {
 		if (c != 1 && c != 2 && c != 3) {
 			cout << "\nInvalid Option.\n\n";
 			
 		}
 	}
+	
 	static void loginScreen(int c) {
 		if (c == 1) {
 			//admin
@@ -126,10 +133,69 @@ public:
 			cout << "Enter Employee ID and Password: \n";
 		}
 		if (c == 3) {
-			//Client
+			//Client app
 			cout << "Enter Client ID and Password: \n";
 			//client Login
-			
+			int id;
+			string password;
+			cin >> id >> password;
+			loggedInClient = ClientManager::login(id, password, allClients);
+			//client menu
+			ClientManager::PrintClientMenu();
+			clientOptions(loggedInClient);
+		}
+	}
+	static void clientOptions(Client* loggedInClient) {
+		int choice;
+		cin >> choice;
+		double amount;
+		if (choice == 1) {
+			//deposit
+			cout << "Enter amount to deposit: \n";
+			cin >> amount;
+			loggedInClient->deposit(amount, *loggedInClient, allClients);
+			cout << loggedInClient->getBalance();
+		}
+		if (choice == 2) {
+			//withdraw
+			cout << "Enter amount to withdraw: \n";
+			cin >> amount;
+			loggedInClient->withdraw(amount, *loggedInClient, allClients);
+			cout << loggedInClient->getBalance();
+		}
+		if (choice == 3) {
+			//transfer to
+			cout << "Enter amount and Receiver ID: \n";
+			int id;
+			cin >> amount >> id;
+			loggedInClient->transferTo(amount, *loggedInClient, id, allClients);
+			cout << loggedInClient->getBalance();
+		}
+		if (choice == 4) {
+			//display info
+			loggedInClient->display();
+			cout << "\n\nEnter Y to return to the client menu, N to Exit the program. \n";
+			char toReturn;
+			cin >> toReturn;
+			if (toReturn == 'Y' || toReturn == 'y') {
+				//back to main page
+				ClientManager::PrintClientMenu();
+				clientOptions(loggedInClient);
+			}
+			else {
+				return;
+			}
+		}
+		if (choice == 5) {
+			//update password
+			ClientManager::updatePassword(loggedInClient);
+			//back to main page
+			ClientManager::PrintClientMenu();
+			clientOptions(loggedInClient);
+		}
+		if (choice == 6) {
+			//exit app
+			return;
 		}
 	}
 
